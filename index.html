@@ -1112,64 +1112,60 @@
 </div>
 </footer>
 <script>
-  // Custom cursor
-  document.addEventListener('mousemove', function(e) {
+  document.addEventListener('DOMContentLoaded', () => {
+    // Register GSAP plugins
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+    }
+
+    // Custom cursor
     if (window.innerWidth > 1024) {
       const cursor = document.querySelector('.cursor');
       const cursorFollower = document.querySelector('.cursor-follower');
-      if (cursor && cursorFollower) {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
+
+      document.addEventListener('mousemove', (e) => {
+        cursor.style.left = `${e.clientX}px`;
+        cursor.style.top = `${e.clientY}px`;
 
         setTimeout(() => {
-          cursorFollower.style.left = e.clientX + 'px';
-          cursorFollower.style.top = e.clientY + 'px';
+          cursorFollower.style.left = `${e.clientX}px`;
+          cursorFollower.style.top = `${e.clientY}px`;
         }, 80);
-      }
+      });
+
+      // Link and button hover effects for cursor
+      const links = document.querySelectorAll('a, button, .menu-trigger');
+      links.forEach(link => {
+        link.addEventListener('mouseenter', () => {
+          cursor.style.width = '40px';
+          cursor.style.height = '40px';
+          cursorFollower.style.width = '60px';
+          cursorFollower.style.height = '60px';
+        });
+
+        link.addEventListener('mouseleave', () => {
+          cursor.style.width = '20px';
+          cursor.style.height = '20px';
+          cursorFollower.style.width = '40px';
+          cursorFollower.style.height = '40px';
+        });
+      });
     }
-  });
 
-  // Link and button hover effects for cursor
-  const links = document.querySelectorAll('a, button, .menu-trigger');
-  links.forEach(link => {
-    link.addEventListener('mouseenter', () => {
-      const cursor = document.querySelector('.cursor');
-      const cursorFollower = document.querySelector('.cursor-follower');
-      if (cursor && cursorFollower) {
-        cursor.style.width = '40px';
-        cursor.style.height = '40px';
-        cursorFollower.style.width = '60px';
-        cursorFollower.style.height = '60px';
-      }
+    // Parallax effect
+    const parallaxElements = document.querySelectorAll('.parallax');
+    window.addEventListener('mousemove', (e) => {
+      parallaxElements.forEach(element => {
+        const speed = element.getAttribute('data-speed');
+        const x = (window.innerWidth - e.pageX * speed) / 100;
+        const y = (window.innerHeight - e.pageY * speed) / 100;
+        element.style.transform = `translateX(${x}px) translateY(${y}px) rotate(${element.classList.contains('rotate-3') ? '3deg' : '-6deg'})`;
+      });
     });
 
-    link.addEventListener('mouseleave', () => {
-      const cursor = document.querySelector('.cursor');
-      const cursorFollower = document.querySelector('.cursor-follower');
-      if (cursor && cursorFollower) {
-        cursor.style.width = '20px';
-        cursor.style.height = '20px';
-        cursorFollower.style.width = '40px';
-        cursorFollower.style.height = '40px';
-      }
-    });
-  });
-
-  // Parallax effect
-  const parallaxElements = document.querySelectorAll('.parallax');
-  window.addEventListener('mousemove', (e) => {
-    parallaxElements.forEach(element => {
-      const speed = element.getAttribute('data-speed');
-      const x = (window.innerWidth - e.pageX * speed) / 100;
-      const y = (window.innerHeight - e.pageY * speed) / 100;
-      element.style.transform = `translateX(${x}px) translateY(${y}px) rotate(${element.classList.contains('rotate-3') ? '3deg' : '-6deg'})`;
-    });
-  });
-
-  // Navbar scroll effect
-  window.addEventListener('scroll', () => {
+    // Navbar scroll effect
     const navbar = document.getElementById('navbar');
-    if (navbar) {
+    window.addEventListener('scroll', () => {
       if (window.scrollY > 100) {
         navbar.classList.add('py-2');
         navbar.classList.remove('py-4');
@@ -1177,61 +1173,63 @@
         navbar.classList.add('py-4');
         navbar.classList.remove('py-2');
       }
-    }
-  });
-
-  // Mobile menu toggle
-  const menuTrigger = document.querySelector('.menu-trigger');
-  const mobileMenu = document.querySelector('.mobile-menu');
-  const mobileLinks = document.querySelectorAll('.mobile-link');
-
-  if (menuTrigger && mobileMenu) {
-    menuTrigger.addEventListener('click', () => {
-      menuTrigger.classList.toggle('active');
-      mobileMenu.classList.toggle('active');
-      document.body.classList.toggle('overflow-hidden');
     });
 
-    mobileLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        menuTrigger.classList.remove('active');
-        mobileMenu.classList.remove('active');
-        document.body.classList.remove('overflow-hidden');
+    // Mobile menu toggle
+    const menuTrigger = document.querySelector('.menu-trigger');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    if (menuTrigger && mobileMenu) {
+      menuTrigger.addEventListener('click', () => {
+        menuTrigger.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        document.body.classList.toggle('overflow-hidden');
       });
+
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          menuTrigger.classList.remove('active');
+          mobileMenu.classList.remove('active');
+          document.body.classList.remove('overflow-hidden');
+        });
+      });
+    }
+
+    // Reveal gallery items on scroll
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const observerOptions = {
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, observerOptions);
+
+    galleryItems.forEach(item => {
+      observer.observe(item);
     });
-  }
 
-  // Reveal gallery items on scroll
-  const galleryItems = document.querySelectorAll('.gallery-item');
-  const observerOptions = { threshold: 0.1 };
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('show');
-      }
-    });
-  }, observerOptions);
-
-  galleryItems.forEach(item => observer.observe(item));
-
-  // FAQ accordion
-  const faqItems = document.querySelectorAll('.faq-item');
-  faqItems.forEach(item => {
-    const question = item.querySelector('.faq-question');
-    if (question) {
+    // FAQ accordion
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
       question.addEventListener('click', () => {
         const isActive = item.classList.contains('active');
         faqItems.forEach(faqItem => faqItem.classList.remove('active'));
-        if (!isActive) item.classList.add('active');
+        if (!isActive) {
+          item.classList.add('active');
+        }
       });
-    }
-  });
+    });
 
-  // GSAP animations
-  document.addEventListener('DOMContentLoaded', () => {
+    // GSAP animations
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-      gsap.registerPlugin(ScrollTrigger);
-
+      // Hero animations
       gsap.from('.hero-content h1', {
         opacity: 0,
         y: 50,
@@ -1254,6 +1252,7 @@
         delay: 0.6
       });
 
+      // Features animations
       gsap.from('#features .glass-card', {
         scrollTrigger: {
           trigger: '#features',
@@ -1265,136 +1264,10 @@
         stagger: 0.2
       });
 
-      gsap.from('#features + section .flex', {
-        scrollTrigger: {
-          trigger: '#features + section',
-          start: 'top 80%',
-        },
-        opacity: 0,
-        x: -50,
-        duration: 0.8,
-        stagger: 0.3
-      });
+      // How it works animations
+      gsap.from('#features + section .flex
+::contentReference[oaicite:5]{index=5}
+ 
 
-      gsap.from('section:nth-of-type(5) .glass-card', {
-        scrollTrigger: {
-          trigger: 'section:nth-of-type(5)',
-          start: 'top 80%',
-        },
-        opacity: 0,
-        y: 50,
-        duration: 0.8,
-        stagger: 0.2
-      });
-
-      gsap.from('.faq-item', {
-        scrollTrigger: {
-          trigger: '#faq',
-          start: 'top 80%',
-        },
-        opacity: 0,
-        y: 30,
-        duration: 0.6,
-        stagger: 0.15
-      });
-
-      gsap.from('section:nth-of-type(7) h2, section:nth-of-type(7) p, section:nth-of-type(7) a, section:nth-of-type(7) .flex', {
-        scrollTrigger: {
-          trigger: 'section:nth-of-type(7)',
-          start: 'top 80%',
-        },
-        opacity: 0,
-        y: 20,
-        duration: 0.8,
-        stagger: 0.2
-      });
-
-      gsap.from('#contact .glass-card', {
-        scrollTrigger: {
-          trigger: '#contact',
-          start: 'top 80%',
-        },
-        opacity: 0,
-        y: 50,
-        duration: 0.8
-      });
-
-      gsap.from('#contact form > div', {
-        scrollTrigger: {
-          trigger: '#contact',
-          start: 'top 80%',
-        },
-        opacity: 0,
-        y: 30,
-        duration: 0.6,
-        stagger: 0.1,
-        delay: 0.4
-      });
-    }
-
-    // Contact form logic
-    const contactForm = document.getElementById('contact-form');
-    if (contactForm) {
-      const handleSubmit = function (e) {
-        e.preventDefault();
-        const name = document.getElementById('name')?.value;
-        const email = document.getElementById('email')?.value;
-        const subject = document.getElementById('subject')?.value;
-        const message = document.getElementById('message')?.value;
-
-        if (!name || !email || !subject || !message) {
-          alert('Please fill in all required fields.');
-          return;
-        }
-
-        const formContainer = contactForm.parentElement;
-        const originalForm = formContainer.innerHTML;
-
-        formContainer.innerHTML = `
-          <div class="text-center py-12">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-green-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <h3 class="text-2xl font-bold mb-4">Message Sent!</h3>
-            <p class="opacity-80 mb-6">Thank you for contacting us. We'll get back to you soon.</p>
-            <button id="send-another" class="glow-btn">Send Another Message</button>
-          </div>
-        `;
-
-        document.getElementById('send-another').addEventListener('click', function () {
-          formContainer.innerHTML = originalForm;
-          const newForm = document.getElementById('contact-form');
-          if (newForm) {
-            newForm.addEventListener('submit', handleSubmit);
-          }
-        });
-      };
-
-      contactForm.addEventListener('submit', handleSubmit);
-    }
-
-    // Gallery image loading
-    const galleryImages = document.querySelectorAll('.gallery-item img');
-    galleryImages.forEach(img => {
-      img.addEventListener('load', () => {
-        img.classList.add('loaded');
-      });
-    });
-
-    // Smooth scroll
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          window.scrollTo({
-            top: target.offsetTop - 100,
-            behavior: 'smooth'
-          });
-        }
-      });
-    });
-  });
-</script>
 
               
