@@ -1244,6 +1244,13 @@
     // Register ScrollTrigger plugin
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
       gsap.registerPlugin(ScrollTrigger);
+  // Add loading animation for gallery elements
+  const galleryImages = document.querySelectorAll('.gallery-item img');
+    galleryImages.forEach(img => {
+      img.addEventListener('load', () => {
+        img.classList.add('loaded');
+      });
+    });
       
     // Hero animations
     gsap.from('.hero-content h1', {
