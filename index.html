@@ -166,74 +166,88 @@
       box-shadow: 0 0 20px rgba(255, 0, 200, 0.5);
       transform: translateY(-3px);
     }
-
+    /* Gallery styling */
     .gallery-container {
-      position: relative;
-      overflow: hidden;
-    }
-
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 20px;
-      padding: 20px;
       max-width: 1200px;
       margin: 0 auto;
     }
-
+  
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+  
+    @media (min-width: 640px) {
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  
+    @media (min-width: 1024px) {
+      .gallery-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  
     .gallery-item {
       position: relative;
       overflow: hidden;
-      border-radius: 16px;
+      border-radius: 0.5rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
       transform: translateY(50px);
       opacity: 0;
-      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
-
+  
     .gallery-item.show {
       transform: translateY(0);
       opacity: 1;
     }
-
+  
+    .gallery-image-container {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 1 / 1;
+    }
+  
     .gallery-item img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: all 0.5s ease;
-    }
-
-    .gallery-item::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      transition: transform 0.5s ease;
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transform: scale(1.05);
     }
-
-    .gallery-item:hover::before {
+  
+    .gallery-item img.loaded {
       opacity: 1;
+      transform: scale(1);
     }
-
+  
     .gallery-item:hover img {
       transform: scale(1.1);
     }
-
+  
     .gallery-prompt {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      padding: 20px;
-      color: white;
-      transform: translateY(100%);
-      transition: transform 0.3s ease;
+      padding: 1rem;
+      background: rgba(15, 15, 15, 0.8);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
-
-    .gallery-item:hover .gallery-prompt {
-      transform: translateY(0);
+  
+    /* Add this to your CSS animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
-
     .cursor {
       position: absolute;
       width: 20px;
@@ -706,29 +720,31 @@
       </div>
     </div>
   </section>
-
- <!-- Gallery Section -->
- <section id="gallery" class="py-20 px-6 bg-black bg-opacity-40 relative overflow-hidden">
-   <div class="blob" style="top: -100px; right: -100px; opacity: 0.1;"></div>
+<!-- Gallery Section -->
+<section id="gallery" class="py-20 px-6 bg-black bg-opacity-40 relative overflow-hidden">
+  <div class="blob" style="top: -100px; right: -100px; opacity: 0.1;"></div>
     
-   <div class="container mx-auto mb-12 text-center">
-     <h2 class="text-4xl font-bold mb-4">AI Art <span class="animated-gradient-text">Gallery</span></h2>
-     <p class="text-lg opacity-80 max-w-2xl mx-auto">Explore stunning AI-generated artworks from our community</p>
+  <div class="container mx-auto mb-12 text-center">
+    <h2 class="text-4xl font-bold mb-4">AI Art <span class="animated-gradient-text">Gallery</span></h2>
+    <p class="text-lg opacity-80 max-w-2xl mx-auto">Explore stunning AI-generated artworks from our community</p>
   </div>
     
   <div class="gallery-container">
     <div class="gallery-grid">
       <div class="gallery-item">
-        <img src="pic/art1.jpg" alt="AI Art 1" class="w-full rounded-lg">
+        <div class="gallery-image-container">
+          <img src="pic/art1.jpg" alt="AI Art 1" class="w-full rounded-lg">
+        </div>
         <div class="gallery-prompt">
           <p class="font-semibold text-sm">Generated from:</p>
-          <p class="text-xs opacity-80">"
           <p class="text-xs opacity-80">"A magical forest at night with bioluminescent plants and a full moon shining through the trees"</p>
         </div>
       </div>
         
       <div class="gallery-item">
-        <img src="pic/art2.jpg" alt="AI Art 2" class="w-full rounded-lg">
+        <div class="gallery-image-container">
+          <img src="pic/art2.jpg" alt="AI Art 2" class="w-full rounded-lg">
+        </div>
         <div class="gallery-prompt">
           <p class="font-semibold text-sm">Generated from:</p>
           <p class="text-xs opacity-80">"Cyberpunk cityscape at sunset with flying cars and neon billboards"</p>
@@ -736,7 +752,9 @@
       </div>
         
       <div class="gallery-item">
-        <img src="pic/art3.jpg" alt="AI Art 3" class="w-full rounded-lg">
+        <div class="gallery-image-container">
+          <img src="pic/art3.jpg" alt="AI Art 3" class="w-full rounded-lg">
+        </div>
         <div class="gallery-prompt">
           <p class="font-semibold text-sm">Generated from:</p>
           <p class="text-xs opacity-80">"Underwater kingdom with mermaids and ancient architecture"</p>
@@ -744,7 +762,9 @@
       </div>
         
       <div class="gallery-item">
-        <img src="pic/art4.jpg" alt="AI Art 4" class="w-full rounded-lg">
+        <div class="gallery-image-container">
+          <img src="pic/art4.jpg" alt="AI Art 4" class="w-full rounded-lg">
+        </div>
         <div class="gallery-prompt">
           <p class="font-semibold text-sm">Generated from:</p>
           <p class="text-xs opacity-80">"Steampunk airship battle in stormy clouds"</p>
@@ -752,7 +772,9 @@
       </div>
         
       <div class="gallery-item">
-        <img src="pic/art5.jpg" alt="AI Art 5" class="w-full rounded-lg">
+        <div class="gallery-image-container">
+          <img src="pic/art5.jpg" alt="AI Art 5" class="w-full rounded-lg">
+        </div>
         <div class="gallery-prompt">
           <p class="font-semibold text-sm">Generated from:</p>
           <p class="text-xs opacity-80">"Dragon perched on a mountain peak at sunrise"</p>
@@ -760,7 +782,9 @@
       </div>
         
       <div class="gallery-item">
-        <img src="pic/art6.jpg" alt="AI Art 6" class="w-full rounded-lg">
+        <div class="gallery-image-container">
+          <img src="pic/art6.jpg" alt="AI Art 6" class="w-full rounded-lg">
+        </div>
         <div class="gallery-prompt">
           <p class="font-semibold text-sm">Generated from:</p>
           <p class="text-xs opacity-80">"Futuristic space colony on Mars with biodomes"</p>
@@ -1235,11 +1259,79 @@
   });
 
   // GSAP animations
+  // Gallery animations with GSAP
   document.addEventListener('DOMContentLoaded', () => {
-    // Register ScrollTrigger plugin
+    // Reveal gallery items on scroll
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          observer.unobserve(entry.target); // Stop observing once shown
+        }
+      });
+    }, observerOptions);
+    
+    galleryItems.forEach((item, index) => {
+      // Add staggered delay based on index
+      item.style.transitionDelay = `${index * 0.1}s`;
+      observer.observe(item);
+    });
+    
+    // Image loading animations
+    const galleryImages = document.querySelectorAll('.gallery-item img');
+    galleryImages.forEach(img => {
+      if (img.complete) {
+        img.classList.add('loaded');
+      } else {
+        img.addEventListener('load', () => {
+          img.classList.add('loaded');
+        });
+      }
+    });
+    
+    // GSAP gallery animations (if GSAP is available)
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
       gsap.registerPlugin(ScrollTrigger);
       
+      gsap.from('#gallery h2', {
+        scrollTrigger: {
+          trigger: '#gallery',
+          start: 'top 80%',
+        },
+        opacity: 0,
+        y: 30,
+        duration: 0.8
+      });
+      
+      gsap.from('#gallery p.text-lg', {
+        scrollTrigger: {
+          trigger: '#gallery',
+          start: 'top 80%',
+        },
+        opacity: 0,
+        y: 20,
+        duration: 0.8,
+        delay: 0.2
+      });
+      
+      gsap.from('#gallery .glow-btn', {
+        scrollTrigger: {
+          trigger: '#gallery .gallery-grid',
+          start: 'bottom 80%',
+        },
+        opacity: 0,
+        y: 20,
+        duration: 0.8
+      });
+    }
+  });
     // Hero animations
     gsap.from('.hero-content h1', {
       opacity: 0,
