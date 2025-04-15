@@ -1111,131 +1111,184 @@
   </div>
 </div>
 </footer>
+// Make sure to include GSAP and ScrollTrigger in your HTML before this script
+// <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+// <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
-<!-- JavaScript -->
-<script>
-  // Custom cursor
-  document.addEventListener('mousemove', function(e) {
-    if (window.innerWidth > 1024) {
-      const cursor = document.querySelector('.cursor');
-      const cursorFollower = document.querySelector('.cursor-follower');
-      
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
-      
-      setTimeout(() => {
-        cursorFollower.style.left = e.clientX + 'px';
-        cursorFollower.style.top = e.clientY + 'px';
-      }, 80);
+
+<!--Javascript-->
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize GSAP
+  if (typeof gsap !== 'undefined') {
+    if (typeof ScrollTrigger !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+    } else {
+      console.error('ScrollTrigger plugin not loaded');
     }
-  });
+  } else {
+    console.error('GSAP library not loaded');
+    return;
+  }
 
-  // Link and button hover effects for cursor
-  const links = document.querySelectorAll('a, button, .menu-trigger');
-  links.forEach(link => {
-    link.addEventListener('mouseenter', () => {
-      const cursor = document.querySelector('.cursor');
-      const cursorFollower = document.querySelector('.cursor-follower');
-      cursor.style.width = '40px';
-      cursor.style.height = '40px';
-      cursorFollower.style.width = '60px';
-      cursorFollower.style.height = '60px';
+  // Custom cursor
+  const cursor = document.querySelector('.cursor');
+  const cursorFollower = document.querySelector('.cursor-follower');
+  
+  if (cursor && cursorFollower) {
+    document.addEventListener('mousemove', function(e) {
+      if (window.innerWidth > 1024) {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+        
+        setTimeout(() => {
+          cursorFollower.style.left = e.clientX + 'px';
+          cursorFollower.style.top = e.clientY + 'px';
+        }, 80);
+      }
     });
-    
-    link.addEventListener('mouseleave', () => {
-      const cursor = document.querySelector('.cursor');
-      const cursorFollower = document.querySelector('.cursor-follower');
-      cursor.style.width = '20px';
-      cursor.style.height = '20px';
-      cursorFollower.style.width = '40px';
-      cursorFollower.style.height = '40px';
+
+    // Link and button hover effects for cursor
+    const links = document.querySelectorAll('a, button, .menu-trigger');
+    links.forEach(link => {
+      link.addEventListener('mouseenter', () => {
+        cursor.style.width = '40px';
+        cursor.style.height = '40px';
+        cursorFollower.style.width = '60px';
+        cursorFollower.style.height = '60px';
+      });
+      
+      link.addEventListener('mouseleave', () => {
+        cursor.style.width = '20px';
+        cursor.style.height = '20px';
+        cursorFollower.style.width = '40px';
+        cursorFollower.style.height = '40px';
+      });
     });
-  });
+  } else {
+    console.warn('Custom cursor elements not found');
+  }
 
   // Parallax effect
   const parallaxElements = document.querySelectorAll('.parallax');
-  window.addEventListener('mousemove', (e) => {
-    parallaxElements.forEach(element => {
-      const speed = element.getAttribute('data-speed');
-      const x = (window.innerWidth - e.pageX * speed) / 100;
-      const y = (window.innerHeight - e.pageY * speed) / 100;
-      element.style.transform = `translateX(${x}px) translateY(${y}px) rotate(${element.classList.contains('rotate-3') ? '3deg' : '-6deg'})`;
+  if (parallaxElements.length > 0) {
+    window.addEventListener('mousemove', (e) => {
+      parallaxElements.forEach(element => {
+        const speed = element.getAttribute('data-speed');
+        const x = (window.innerWidth - e.pageX * speed) / 100;
+        const y = (window.innerHeight - e.pageY * speed) / 100;
+        element.style.transform = `translateX(${x}px) translateY(${y}px) rotate(${element.classList.contains('rotate-3') ? '3deg' : '-6deg'})`;
+      });
     });
-  });
+  } else {
+    console.warn('No parallax elements found');
+  }
 
   // Navbar scroll effect
-  window.addEventListener('scroll', () => {
-    const navbar = document.getElementById('navbar');
-    if (window.scrollY > 100) {
-      navbar.classList.add('py-2');
-      navbar.classList.remove('py-4');
-    } else {
-      navbar.classList.add('py-4');
-      navbar.classList.remove('py-2');
-    }
-  });
+  const navbar = document.getElementById('navbar');
+  if (navbar) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        navbar.classList.add('py-2');
+        navbar.classList.remove('py-4');
+      } else {
+        navbar.classList.add('py-4');
+        navbar.classList.remove('py-2');
+      }
+    });
+  } else {
+    console.warn('Navbar element not found');
+  }
 
   // Mobile menu toggle
   const menuTrigger = document.querySelector('.menu-trigger');
   const mobileMenu = document.querySelector('.mobile-menu');
-  const mobileLinks = document.querySelectorAll('.mobile-link');
   
-  menuTrigger.addEventListener('click', () => {
-    menuTrigger.classList.toggle('active');
-    mobileMenu.classList.toggle('active');
-    document.body.classList.toggle('overflow-hidden');
-  });
-  
-  mobileLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      menuTrigger.classList.remove('active');
-      mobileMenu.classList.remove('active');
-      document.body.classList.remove('overflow-hidden');
+  if (menuTrigger && mobileMenu) {
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+    
+    menuTrigger.addEventListener('click', () => {
+      menuTrigger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+      document.body.classList.toggle('overflow-hidden');
     });
-  });
+    
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        menuTrigger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.classList.remove('overflow-hidden');
+      });
+    });
+  } else {
+    console.warn('Mobile menu elements not found');
+  }
 
   // Reveal gallery items on scroll
   const galleryItems = document.querySelectorAll('.gallery-item');
   
-  const observerOptions = {
-    threshold: 0.1
-  };
-  
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('show');
+  if (galleryItems.length > 0) {
+    const observerOptions = {
+      threshold: 0.1
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, observerOptions);
+    
+    galleryItems.forEach(item => {
+      observer.observe(item);
+    });
+    
+    // Add loading animation for gallery images
+    const galleryImages = document.querySelectorAll('.gallery-item img');
+    galleryImages.forEach(img => {
+      if (img.complete) {
+        img.classList.add('loaded');
+      } else {
+        img.addEventListener('load', () => {
+          img.classList.add('loaded');
+        });
       }
     });
-  }, observerOptions);
-  
-  galleryItems.forEach(item => {
-    observer.observe(item);
-  });
+  } else {
+    console.warn('No gallery items found');
+  }
 
   // FAQ accordion
   const faqItems = document.querySelectorAll('.faq-item');
   
-  faqItems.forEach(item => {
-    const question = item.querySelector('.faq-question');
-    
-    question.addEventListener('click', () => {
-      const isActive = item.classList.contains('active');
+  if (faqItems.length > 0) {
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
       
-      // Close all FAQ items
-      faqItems.forEach(faqItem => {
-        faqItem.classList.remove('active');
-      });
-      
-      // If clicked item wasn't active, make it active
-      if (!isActive) {
-        item.classList.add('active');
+      if (question) {
+        question.addEventListener('click', () => {
+          const isActive = item.classList.contains('active');
+          
+          // Close all FAQ items
+          faqItems.forEach(faqItem => {
+            faqItem.classList.remove('active');
+          });
+          
+          // If clicked item wasn't active, make it active
+          if (!isActive) {
+            item.classList.add('active');
+          }
+        });
       }
     });
-  });
+  } else {
+    console.warn('No FAQ items found');
+  }
       
-    // Hero animations
-    gsap.from('.hero-content h1', {
+  // Hero animations
+  const heroHeading = document.querySelector('.hero-content h1');
+  if (heroHeading) {
+    gsap.from(heroHeading, {
       opacity: 0,
       y: 50,
       duration: 1,
@@ -1250,17 +1303,21 @@
       stagger: 0.2
     });
     
-    gsap.from('.glass-card', {
+    gsap.from('.hero-content .glass-card', {
       opacity: 0,
       scale: 0.8,
       duration: 1,
       delay: 0.6
     });
-    
-    // Scroll animations
-    gsap.registerPlugin(ScrollTrigger);
-    
-    // Features animations
+  } else {
+    console.warn('Hero heading element not found');
+  }
+  
+  // Add all section animations with proper checks
+  
+  // Features animations
+  const featuresSection = document.getElementById('features');
+  if (featuresSection) {
     gsap.from('#features .glass-card', {
       scrollTrigger: {
         trigger: '#features',
@@ -1271,8 +1328,13 @@
       duration: 0.8,
       stagger: 0.2
     });
-    
-    // How it works animations
+  } else {
+    console.warn('Features section not found');
+  }
+  
+  // How it works animations
+  const howItWorksSection = document.querySelector('#features + section');
+  if (howItWorksSection) {
     gsap.from('#features + section .flex', {
       scrollTrigger: {
         trigger: '#features + section',
@@ -1283,8 +1345,13 @@
       duration: 0.8,
       stagger: 0.3
     });
-    
-    // Testimonials animations
+  } else {
+    console.warn('How it works section not found');
+  }
+  
+  // Testimonials animations
+  const testimonialsSection = document.querySelector('section:nth-of-type(5)');
+  if (testimonialsSection) {
     gsap.from('section:nth-of-type(5) .glass-card', {
       scrollTrigger: {
         trigger: 'section:nth-of-type(5)',
@@ -1295,8 +1362,13 @@
       duration: 0.8,
       stagger: 0.2
     });
-    
-    // FAQ animations
+  } else {
+    console.warn('Testimonials section not found');
+  }
+  
+  // FAQ animations
+  const faqSection = document.getElementById('faq');
+  if (faqSection) {
     gsap.from('.faq-item', {
       scrollTrigger: {
         trigger: '#faq',
@@ -1307,8 +1379,13 @@
       duration: 0.6,
       stagger: 0.15
     });
-    
-    // CTA animations
+  } else {
+    console.warn('FAQ section not found');
+  }
+  
+  // CTA animations
+  const ctaSection = document.querySelector('section:nth-of-type(7)');
+  if (ctaSection) {
     gsap.from('section:nth-of-type(7) h2, section:nth-of-type(7) p, section:nth-of-type(7) a, section:nth-of-type(7) .flex', {
       scrollTrigger: {
         trigger: 'section:nth-of-type(7)',
@@ -1319,49 +1396,38 @@
       duration: 0.8,
       stagger: 0.2
     });
-    
-  document.addEventListener('DOMContentLoaded', () => {
-    // Register ScrollTrigger plugin
-    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-      gsap.registerPlugin(ScrollTrigger);
-      
-      // Features section animations with improved selectors
-      gsap.from('#features .glass-card', {
-        scrollTrigger: {
-          trigger: '#features',
-          start: 'top 80%',
-        },
-        opacity: 0,
-        y: 100,
-        duration: 0.8,
-        stagger: 0.2
-      });
-      
-      // Contact form animations with improved selectors
-      gsap.from('#contact .glass-card', {
-        scrollTrigger: {
-          trigger: '#contact',
-          start: 'top 80%',
-        },
-        opacity: 0,
-        y: 50,
-        duration: 0.8
-      });
-      
-      gsap.from('#contact form > div', {
-        scrollTrigger: {
-          trigger: '#contact',
-          start: 'top 80%',
-        },
-        opacity: 0,
-        y: 30,
-        duration: 0.6,
-        stagger: 0.1,
-        delay: 0.4
-      });
-    }
-  });
+  } else {
+    console.warn('CTA section not found');
+  }
   
+  // Contact form animations
+  const contactSection = document.getElementById('contact');
+  if (contactSection) {
+    gsap.from('#contact .glass-card', {
+      scrollTrigger: {
+        trigger: '#contact',
+        start: 'top 80%',
+      },
+      opacity: 0,
+      y: 50,
+      duration: 0.8
+    });
+    
+    gsap.from('#contact form > div', {
+      scrollTrigger: {
+        trigger: '#contact',
+        start: 'top 80%',
+      },
+      opacity: 0,
+      y: 30,
+      duration: 0.6,
+      stagger: 0.1,
+      delay: 0.4
+    });
+  } else {
+    console.warn('Contact section not found');
+  }
+
   // Form validation and submission for Contact section
   const contactForm = document.getElementById('contact-form');
   if (contactForm) {
@@ -1408,14 +1474,9 @@
         }
       });
     });
+  } else {
+    console.warn('Contact form not found');
   }
-  // Add loading animation for gallery elements
-  const galleryImages = document.querySelectorAll('.gallery-item img');
-  galleryImages.forEach(img => {
-    img.addEventListener('load', () => {
-      img.classList.add('loaded');
-    });
-  });
 
   // Add smooth scrolling for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1430,5 +1491,5 @@
       }
     });
   });
-</script>
+});
               
