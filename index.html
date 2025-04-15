@@ -1133,7 +1133,6 @@
         }, 80);
       });
 
-      // Link and button hover effects for cursor
       const links = document.querySelectorAll('a, button, .menu-trigger');
       links.forEach(link => {
         link.addEventListener('mouseenter', () => {
@@ -1152,7 +1151,7 @@
       });
     }
 
-    // Parallax effect
+    // Parallax
     const parallaxElements = document.querySelectorAll('.parallax');
     window.addEventListener('mousemove', (e) => {
       parallaxElements.forEach(element => {
@@ -1163,7 +1162,7 @@
       });
     });
 
-    // Navbar scroll effect
+    // Navbar resize on scroll
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
       if (window.scrollY > 100) {
@@ -1196,11 +1195,9 @@
       });
     }
 
-    // Reveal gallery items on scroll
+    // Gallery reveal
     const galleryItems = document.querySelectorAll('.gallery-item');
-    const observerOptions = {
-      threshold: 0.1
-    };
+    const observerOptions = { threshold: 0.1 };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -1210,9 +1207,7 @@
       });
     }, observerOptions);
 
-    galleryItems.forEach(item => {
-      observer.observe(item);
-    });
+    galleryItems.forEach(item => observer.observe(item));
 
     // FAQ accordion
     const faqItems = document.querySelectorAll('.faq-item');
@@ -1220,54 +1215,57 @@
       const question = item.querySelector('.faq-question');
       question.addEventListener('click', () => {
         const isActive = item.classList.contains('active');
-        faqItems.forEach(faqItem => faqItem.classList.remove('active'));
-        if (!isActive) {
-          item.classList.add('active');
-        }
+        faqItems.forEach(i => i.classList.remove('active'));
+        if (!isActive) item.classList.add('active');
       });
     });
 
-    // GSAP animations
+    // GSAP Animations
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-      // Hero animations
-      gsap.from('.hero-content h1', {
-        opacity: 0,
-        y: 50,
-        duration: 1,
-        delay: 0.2
-      });
-
+      // Hero Section
+      gsap.from('.hero-content h1', { opacity: 0, y: 50, duration: 1, delay: 0.2 });
       gsap.from('.hero-content p, .hero-content .flex', {
-        opacity: 0,
-        y: 30,
-        duration: 1,
-        delay: 0.4,
-        stagger: 0.2
+        opacity: 0, y: 30, duration: 1, delay: 0.4, stagger: 0.2
       });
+      gsap.from('.glass-card', { opacity: 0, scale: 0.8, duration: 1, delay: 0.6 });
 
-      gsap.from('.glass-card', {
-        opacity: 0,
-        scale: 0.8,
-        duration: 1,
-        delay: 0.6
-      });
-
-      // Features animations
+      // Features
       gsap.from('#features .glass-card', {
-        scrollTrigger: {
-          trigger: '#features',
-          start: 'top 80%',
-        },
-        opacity: 0,
-        y: 100,
-        duration: 0.8,
-        stagger: 0.2
+        scrollTrigger: { trigger: '#features', start: 'top 80%' },
+        opacity: 0, y: 100, duration: 0.8, stagger: 0.2
       });
 
-      // How it works animations
-      gsap.from('#features + section .flex
-::contentReference[oaicite:5]{index=5}
- 
+      // How it works
+      gsap.from('#features + section .flex', {
+        scrollTrigger: { trigger: '#features + section', start: 'top 80%' },
+        opacity: 0, x: -50, duration: 0.8, stagger: 0.3
+      });
 
+      // Testimonials
+      gsap.from('section:nth-of-type(5) .glass-card', {
+        scrollTrigger: { trigger: 'section:nth-of-type(5)', start: 'top 80%' },
+        opacity: 0, y: 50, duration: 0.8, stagger: 0.2
+      });
+
+      // FAQ
+      gsap.from('.faq-item', {
+        scrollTrigger: { trigger: '#faq', start: 'top 80%' },
+        opacity: 0, y: 30, duration: 0.6, stagger: 0.15
+      });
+
+      // CTA
+      gsap.from('section:nth-of-type(7) h2, section:nth-of-type(7) p, section:nth-of-type(7) a, section:nth-of-type(7) .flex', {
+        scrollTrigger: { trigger: 'section:nth-of-type(7)', start: 'top 80%' },
+        opacity: 0, y: 30, duration: 0.8, stagger: 0.2
+      });
+
+      // Contact form
+      gsap.from('#contact form, #contact .flex', {
+        scrollTrigger: { trigger: '#contact', start: 'top 80%' },
+        opacity: 0, y: 50, duration: 0.8, stagger: 0.2
+      });
+    }
+  });
+</script>
 
               
