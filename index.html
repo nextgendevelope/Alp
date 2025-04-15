@@ -166,74 +166,88 @@
       box-shadow: 0 0 20px rgba(255, 0, 200, 0.5);
       transform: translateY(-3px);
     }
-
+    /* Gallery styling */
     .gallery-container {
-      position: relative;
-      overflow: hidden;
-    }
-
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 20px;
-      padding: 20px;
       max-width: 1200px;
       margin: 0 auto;
     }
-
+  
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+  
+    @media (min-width: 640px) {
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  
+    @media (min-width: 1024px) {
+      .gallery-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  
     .gallery-item {
       position: relative;
       overflow: hidden;
-      border-radius: 16px;
+      border-radius: 0.5rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
       transform: translateY(50px);
       opacity: 0;
-      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
-
+  
     .gallery-item.show {
       transform: translateY(0);
       opacity: 1;
     }
-
+  
+    .gallery-image-container {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 1 / 1;
+    }
+  
     .gallery-item img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: all 0.5s ease;
-    }
-
-    .gallery-item::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      transition: transform 0.5s ease;
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transform: scale(1.05);
     }
-
-    .gallery-item:hover::before {
+  
+    .gallery-item img.loaded {
       opacity: 1;
+      transform: scale(1);
     }
-
+  
     .gallery-item:hover img {
       transform: scale(1.1);
     }
-
+  
     .gallery-prompt {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      padding: 20px;
-      color: white;
-      transform: translateY(100%);
-      transition: transform 0.3s ease;
+      padding: 1rem;
+      background: rgba(15, 15, 15, 0.8);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
-
-    .gallery-item:hover .gallery-prompt {
-      transform: translateY(0);
+  
+    /* Add this to your CSS animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
-
     .cursor {
       position: absolute;
       width: 20px;
@@ -706,29 +720,31 @@
       </div>
     </div>
   </section>
-
- <!-- Gallery Section -->
- <section id="gallery" class="py-20 px-6 bg-black bg-opacity-40 relative overflow-hidden">
-   <div class="blob" style="top: -100px; right: -100px; opacity: 0.1;"></div>
+<!-- Gallery Section -->
+<section id="gallery" class="py-20 px-6 bg-black bg-opacity-40 relative overflow-hidden">
+  <div class="blob" style="top: -100px; right: -100px; opacity: 0.1;"></div>
     
-   <div class="container mx-auto mb-12 text-center">
-     <h2 class="text-4xl font-bold mb-4">AI Art <span class="animated-gradient-text">Gallery</span></h2>
-     <p class="text-lg opacity-80 max-w-2xl mx-auto">Explore stunning AI-generated artworks from our community</p>
+  <div class="container mx-auto mb-12 text-center">
+    <h2 class="text-4xl font-bold mb-4">AI Art <span class="animated-gradient-text">Gallery</span></h2>
+    <p class="text-lg opacity-80 max-w-2xl mx-auto">Explore stunning AI-generated artworks from our community</p>
   </div>
     
   <div class="gallery-container">
     <div class="gallery-grid">
       <div class="gallery-item">
-        <img src="pic/art1.jpg" alt="AI Art 1" class="w-full rounded-lg">
+        <div class="gallery-image-container">
+          <img src="pic/art1.jpg" alt="AI Art 1" class="w-full rounded-lg">
+        </div>
         <div class="gallery-prompt">
           <p class="font-semibold text-sm">Generated from:</p>
-          <p class="text-xs opacity-80">"
           <p class="text-xs opacity-80">"A magical forest at night with bioluminescent plants and a full moon shining through the trees"</p>
         </div>
       </div>
         
       <div class="gallery-item">
-        <img src="pic/art2.jpg" alt="AI Art 2" class="w-full rounded-lg">
+        <div class="gallery-image-container">
+          <img src="pic/art2.jpg" alt="AI Art 2" class="w-full rounded-lg">
+        </div>
         <div class="gallery-prompt">
           <p class="font-semibold text-sm">Generated from:</p>
           <p class="text-xs opacity-80">"Cyberpunk cityscape at sunset with flying cars and neon billboards"</p>
@@ -736,7 +752,9 @@
       </div>
         
       <div class="gallery-item">
-        <img src="pic/art3.jpg" alt="AI Art 3" class="w-full rounded-lg">
+        <div class="gallery-image-container">
+          <img src="pic/art3.jpg" alt="AI Art 3" class="w-full rounded-lg">
+        </div>
         <div class="gallery-prompt">
           <p class="font-semibold text-sm">Generated from:</p>
           <p class="text-xs opacity-80">"Underwater kingdom with mermaids and ancient architecture"</p>
@@ -744,7 +762,9 @@
       </div>
         
       <div class="gallery-item">
-        <img src="pic/art4.jpg" alt="AI Art 4" class="w-full rounded-lg">
+        <div class="gallery-image-container">
+          <img src="pic/art4.jpg" alt="AI Art 4" class="w-full rounded-lg">
+        </div>
         <div class="gallery-prompt">
           <p class="font-semibold text-sm">Generated from:</p>
           <p class="text-xs opacity-80">"Steampunk airship battle in stormy clouds"</p>
@@ -752,7 +772,9 @@
       </div>
         
       <div class="gallery-item">
-        <img src="pic/art5.jpg" alt="AI Art 5" class="w-full rounded-lg">
+        <div class="gallery-image-container">
+          <img src="pic/art5.jpg" alt="AI Art 5" class="w-full rounded-lg">
+        </div>
         <div class="gallery-prompt">
           <p class="font-semibold text-sm">Generated from:</p>
           <p class="text-xs opacity-80">"Dragon perched on a mountain peak at sunrise"</p>
@@ -760,7 +782,9 @@
       </div>
         
       <div class="gallery-item">
-        <img src="pic/art6.jpg" alt="AI Art 6" class="w-full rounded-lg">
+        <div class="gallery-image-container">
+          <img src="pic/art6.jpg" alt="AI Art 6" class="w-full rounded-lg">
+        </div>
         <div class="gallery-prompt">
           <p class="font-semibold text-sm">Generated from:</p>
           <p class="text-xs opacity-80">"Futuristic space colony on Mars with biodomes"</p>
@@ -1111,139 +1135,156 @@
   </div>
 </div>
 </footer>
-// Make sure to include GSAP and ScrollTrigger in your HTML before this script
-// <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-// <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
-
-<!--Javascript-->
-document.addEventListener('DOMContentLoaded', function() {
-  // Initialize GSAP
-  if (typeof gsap !== 'undefined') {
-    if (typeof ScrollTrigger !== 'undefined') {
-      gsap.registerPlugin(ScrollTrigger);
-    } else {
-      console.error('ScrollTrigger plugin not loaded');
-    }
-  } else {
-    console.error('GSAP library not loaded');
-    return;
-  }
-
+<!-- JavaScript -->
+<script>
   // Custom cursor
-  const cursor = document.querySelector('.cursor');
-  const cursorFollower = document.querySelector('.cursor-follower');
-  
-  if (cursor && cursorFollower) {
-    document.addEventListener('mousemove', function(e) {
-      if (window.innerWidth > 1024) {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-        
-        setTimeout(() => {
-          cursorFollower.style.left = e.clientX + 'px';
-          cursorFollower.style.top = e.clientY + 'px';
-        }, 80);
-      }
-    });
-
-    // Link and button hover effects for cursor
-    const links = document.querySelectorAll('a, button, .menu-trigger');
-    links.forEach(link => {
-      link.addEventListener('mouseenter', () => {
-        cursor.style.width = '40px';
-        cursor.style.height = '40px';
-        cursorFollower.style.width = '60px';
-        cursorFollower.style.height = '60px';
-      });
+  document.addEventListener('mousemove', function(e) {
+    if (window.innerWidth > 1024) {
+      const cursor = document.querySelector('.cursor');
+      const cursorFollower = document.querySelector('.cursor-follower');
       
-      link.addEventListener('mouseleave', () => {
-        cursor.style.width = '20px';
-        cursor.style.height = '20px';
-        cursorFollower.style.width = '40px';
-        cursorFollower.style.height = '40px';
-      });
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+      
+      setTimeout(() => {
+        cursorFollower.style.left = e.clientX + 'px';
+        cursorFollower.style.top = e.clientY + 'px';
+      }, 80);
+    }
+  });
+
+  // Link and button hover effects for cursor
+  const links = document.querySelectorAll('a, button, .menu-trigger');
+  links.forEach(link => {
+    link.addEventListener('mouseenter', () => {
+      const cursor = document.querySelector('.cursor');
+      const cursorFollower = document.querySelector('.cursor-follower');
+      cursor.style.width = '40px';
+      cursor.style.height = '40px';
+      cursorFollower.style.width = '60px';
+      cursorFollower.style.height = '60px';
     });
-  } else {
-    console.warn('Custom cursor elements not found');
-  }
+    
+    link.addEventListener('mouseleave', () => {
+      const cursor = document.querySelector('.cursor');
+      const cursorFollower = document.querySelector('.cursor-follower');
+      cursor.style.width = '20px';
+      cursor.style.height = '20px';
+      cursorFollower.style.width = '40px';
+      cursorFollower.style.height = '40px';
+    });
+  });
 
   // Parallax effect
   const parallaxElements = document.querySelectorAll('.parallax');
-  if (parallaxElements.length > 0) {
-    window.addEventListener('mousemove', (e) => {
-      parallaxElements.forEach(element => {
-        const speed = element.getAttribute('data-speed');
-        const x = (window.innerWidth - e.pageX * speed) / 100;
-        const y = (window.innerHeight - e.pageY * speed) / 100;
-        element.style.transform = `translateX(${x}px) translateY(${y}px) rotate(${element.classList.contains('rotate-3') ? '3deg' : '-6deg'})`;
-      });
+  window.addEventListener('mousemove', (e) => {
+    parallaxElements.forEach(element => {
+      const speed = element.getAttribute('data-speed');
+      const x = (window.innerWidth - e.pageX * speed) / 100;
+      const y = (window.innerHeight - e.pageY * speed) / 100;
+      element.style.transform = `translateX(${x}px) translateY(${y}px) rotate(${element.classList.contains('rotate-3') ? '3deg' : '-6deg'})`;
     });
-  } else {
-    console.warn('No parallax elements found');
-  }
+  });
 
   // Navbar scroll effect
-  const navbar = document.getElementById('navbar');
-  if (navbar) {
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 100) {
-        navbar.classList.add('py-2');
-        navbar.classList.remove('py-4');
-      } else {
-        navbar.classList.add('py-4');
-        navbar.classList.remove('py-2');
-      }
-    });
-  } else {
-    console.warn('Navbar element not found');
-  }
+  window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('navbar');
+    if (window.scrollY > 100) {
+      navbar.classList.add('py-2');
+      navbar.classList.remove('py-4');
+    } else {
+      navbar.classList.add('py-4');
+      navbar.classList.remove('py-2');
+    }
+  });
 
   // Mobile menu toggle
   const menuTrigger = document.querySelector('.menu-trigger');
   const mobileMenu = document.querySelector('.mobile-menu');
+  const mobileLinks = document.querySelectorAll('.mobile-link');
   
-  if (menuTrigger && mobileMenu) {
-    const mobileLinks = document.querySelectorAll('.mobile-link');
-    
-    menuTrigger.addEventListener('click', () => {
-      menuTrigger.classList.toggle('active');
-      mobileMenu.classList.toggle('active');
-      document.body.classList.toggle('overflow-hidden');
+  menuTrigger.addEventListener('click', () => {
+    menuTrigger.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+    document.body.classList.toggle('overflow-hidden');
+  });
+  
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      menuTrigger.classList.remove('active');
+      mobileMenu.classList.remove('active');
+      document.body.classList.remove('overflow-hidden');
     });
-    
-    mobileLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        menuTrigger.classList.remove('active');
-        mobileMenu.classList.remove('active');
-        document.body.classList.remove('overflow-hidden');
-      });
-    });
-  } else {
-    console.warn('Mobile menu elements not found');
-  }
+  });
 
   // Reveal gallery items on scroll
   const galleryItems = document.querySelectorAll('.gallery-item');
   
-  if (galleryItems.length > 0) {
+  const observerOptions = {
+    threshold: 0.1
+  };
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      }
+    });
+  }, observerOptions);
+  
+  galleryItems.forEach(item => {
+    observer.observe(item);
+  });
+
+  // FAQ accordion
+  const faqItems = document.querySelectorAll('.faq-item');
+  
+  faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
+    
+    question.addEventListener('click', () => {
+      const isActive = item.classList.contains('active');
+      
+      // Close all FAQ items
+      faqItems.forEach(faqItem => {
+        faqItem.classList.remove('active');
+      });
+      
+      // If clicked item wasn't active, make it active
+      if (!isActive) {
+        item.classList.add('active');
+      }
+    });
+  });
+
+  // GSAP animations
+  // Gallery animations with GSAP
+  document.addEventListener('DOMContentLoaded', () => {
+    // Reveal gallery items on scroll
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    
     const observerOptions = {
-      threshold: 0.1
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
     };
     
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('show');
+          observer.unobserve(entry.target); // Stop observing once shown
         }
       });
     }, observerOptions);
     
-    galleryItems.forEach(item => {
+    galleryItems.forEach((item, index) => {
+      // Add staggered delay based on index
+      item.style.transitionDelay = `${index * 0.1}s`;
       observer.observe(item);
     });
     
-    // Add loading animation for gallery images
+    // Image loading animations
     const galleryImages = document.querySelectorAll('.gallery-item img');
     galleryImages.forEach(img => {
       if (img.complete) {
@@ -1254,41 +1295,45 @@ document.addEventListener('DOMContentLoaded', function() {
         });
       }
     });
-  } else {
-    console.warn('No gallery items found');
-  }
-
-  // FAQ accordion
-  const faqItems = document.querySelectorAll('.faq-item');
-  
-  if (faqItems.length > 0) {
-    faqItems.forEach(item => {
-      const question = item.querySelector('.faq-question');
+    
+    // GSAP gallery animations (if GSAP is available)
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
       
-      if (question) {
-        question.addEventListener('click', () => {
-          const isActive = item.classList.contains('active');
-          
-          // Close all FAQ items
-          faqItems.forEach(faqItem => {
-            faqItem.classList.remove('active');
-          });
-          
-          // If clicked item wasn't active, make it active
-          if (!isActive) {
-            item.classList.add('active');
-          }
-        });
-      }
-    });
-  } else {
-    console.warn('No FAQ items found');
-  }
+      gsap.from('#gallery h2', {
+        scrollTrigger: {
+          trigger: '#gallery',
+          start: 'top 80%',
+        },
+        opacity: 0,
+        y: 30,
+        duration: 0.8
+      });
       
-  // Hero animations
-  const heroHeading = document.querySelector('.hero-content h1');
-  if (heroHeading) {
-    gsap.from(heroHeading, {
+      gsap.from('#gallery p.text-lg', {
+        scrollTrigger: {
+          trigger: '#gallery',
+          start: 'top 80%',
+        },
+        opacity: 0,
+        y: 20,
+        duration: 0.8,
+        delay: 0.2
+      });
+      
+      gsap.from('#gallery .glow-btn', {
+        scrollTrigger: {
+          trigger: '#gallery .gallery-grid',
+          start: 'bottom 80%',
+        },
+        opacity: 0,
+        y: 20,
+        duration: 0.8
+      });
+    }
+  });
+    // Hero animations
+    gsap.from('.hero-content h1', {
       opacity: 0,
       y: 50,
       duration: 1,
@@ -1303,21 +1348,17 @@ document.addEventListener('DOMContentLoaded', function() {
       stagger: 0.2
     });
     
-    gsap.from('.hero-content .glass-card', {
+    gsap.from('.glass-card', {
       opacity: 0,
       scale: 0.8,
       duration: 1,
       delay: 0.6
     });
-  } else {
-    console.warn('Hero heading element not found');
-  }
-  
-  // Add all section animations with proper checks
-  
-  // Features animations
-  const featuresSection = document.getElementById('features');
-  if (featuresSection) {
+    
+    // Scroll animations
+    gsap.registerPlugin(ScrollTrigger);
+    
+    // Features animations
     gsap.from('#features .glass-card', {
       scrollTrigger: {
         trigger: '#features',
@@ -1328,13 +1369,8 @@ document.addEventListener('DOMContentLoaded', function() {
       duration: 0.8,
       stagger: 0.2
     });
-  } else {
-    console.warn('Features section not found');
-  }
-  
-  // How it works animations
-  const howItWorksSection = document.querySelector('#features + section');
-  if (howItWorksSection) {
+    
+    // How it works animations
     gsap.from('#features + section .flex', {
       scrollTrigger: {
         trigger: '#features + section',
@@ -1345,13 +1381,8 @@ document.addEventListener('DOMContentLoaded', function() {
       duration: 0.8,
       stagger: 0.3
     });
-  } else {
-    console.warn('How it works section not found');
-  }
-  
-  // Testimonials animations
-  const testimonialsSection = document.querySelector('section:nth-of-type(5)');
-  if (testimonialsSection) {
+    
+    // Testimonials animations
     gsap.from('section:nth-of-type(5) .glass-card', {
       scrollTrigger: {
         trigger: 'section:nth-of-type(5)',
@@ -1362,13 +1393,8 @@ document.addEventListener('DOMContentLoaded', function() {
       duration: 0.8,
       stagger: 0.2
     });
-  } else {
-    console.warn('Testimonials section not found');
-  }
-  
-  // FAQ animations
-  const faqSection = document.getElementById('faq');
-  if (faqSection) {
+    
+    // FAQ animations
     gsap.from('.faq-item', {
       scrollTrigger: {
         trigger: '#faq',
@@ -1379,13 +1405,8 @@ document.addEventListener('DOMContentLoaded', function() {
       duration: 0.6,
       stagger: 0.15
     });
-  } else {
-    console.warn('FAQ section not found');
-  }
-  
-  // CTA animations
-  const ctaSection = document.querySelector('section:nth-of-type(7)');
-  if (ctaSection) {
+    
+    // CTA animations
     gsap.from('section:nth-of-type(7) h2, section:nth-of-type(7) p, section:nth-of-type(7) a, section:nth-of-type(7) .flex', {
       scrollTrigger: {
         trigger: 'section:nth-of-type(7)',
@@ -1396,38 +1417,49 @@ document.addEventListener('DOMContentLoaded', function() {
       duration: 0.8,
       stagger: 0.2
     });
-  } else {
-    console.warn('CTA section not found');
-  }
-  
-  // Contact form animations
-  const contactSection = document.getElementById('contact');
-  if (contactSection) {
-    gsap.from('#contact .glass-card', {
-      scrollTrigger: {
-        trigger: '#contact',
-        start: 'top 80%',
-      },
-      opacity: 0,
-      y: 50,
-      duration: 0.8
-    });
     
-    gsap.from('#contact form > div', {
-      scrollTrigger: {
-        trigger: '#contact',
-        start: 'top 80%',
-      },
-      opacity: 0,
-      y: 30,
-      duration: 0.6,
-      stagger: 0.1,
-      delay: 0.4
-    });
-  } else {
-    console.warn('Contact section not found');
-  }
-
+  document.addEventListener('DOMContentLoaded', () => {
+    // Register ScrollTrigger plugin
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+      
+      // Features section animations with improved selectors
+      gsap.from('#features .glass-card', {
+        scrollTrigger: {
+          trigger: '#features',
+          start: 'top 80%',
+        },
+        opacity: 0,
+        y: 100,
+        duration: 0.8,
+        stagger: 0.2
+      });
+      
+      // Contact form animations with improved selectors
+      gsap.from('#contact .glass-card', {
+        scrollTrigger: {
+          trigger: '#contact',
+          start: 'top 80%',
+        },
+        opacity: 0,
+        y: 50,
+        duration: 0.8
+      });
+      
+      gsap.from('#contact form > div', {
+        scrollTrigger: {
+          trigger: '#contact',
+          start: 'top 80%',
+        },
+        opacity: 0,
+        y: 30,
+        duration: 0.6,
+        stagger: 0.1,
+        delay: 0.4
+      });
+    }
+  });
+  
   // Form validation and submission for Contact section
   const contactForm = document.getElementById('contact-form');
   if (contactForm) {
@@ -1474,9 +1506,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
     });
-  } else {
-    console.warn('Contact form not found');
   }
+  // Add loading animation for gallery elements
+  const galleryImages = document.querySelectorAll('.gallery-item img');
+  galleryImages.forEach(img => {
+    img.addEventListener('load', () => {
+      img.classList.add('loaded');
+    });
+  });
 
   // Add smooth scrolling for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1491,5 +1528,5 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
-});
+</script>
               
