@@ -26,65 +26,32 @@
       border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
-    #tsparticles {
-      position: fixed;
-      z-index: -1;
-      width: 100%;
-      height: 100%;
-    }
-
-    .animated-gradient {
-      background: linear-gradient(270deg, #ff0080, #7928ca, #2afadf, #00f2fe);
-      background-size: 800% 800%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: gradientAnim 10s ease infinite;
-    }
-
-    @keyframes gradientAnim {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .typewriter-text::after {
-      content: '|';
-      animation: blink 1s infinite;
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-
     .card-hover:hover {
       transform: scale(1.05);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .icon-text {
-      display: flex;
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      justify-content: center;
       align-items: center;
-      gap: 10px;
     }
 
-    .icon-text svg {
-      width: 30px;
-      height: 30px;
-      color: #FF00C8;
+    .modal img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 8px;
     }
 
-    .footer-link:hover {
-      color: #FF00C8;
-      text-decoration: underline;
-    }
-
-    .footer {
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(10px);
-      padding: 20px 0;
-      color: #fff;
+    .modal.active {
+      display: flex;
     }
 
   </style>
@@ -111,79 +78,48 @@
     </div>
 
     <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto relative z-10">
-      <!-- Replace the src below with your actual image links -->
-      <div class="overflow-hidden rounded-xl card-hover transform hover:scale-105 transition duration-300 shadow-xl">
+      <!-- Gallery Images -->
+      <div class="overflow-hidden rounded-xl card-hover transform hover:scale-105 transition duration-300 shadow-xl" onclick="openModal('pic/art1.jpg')">
         <img src="pic/art1.jpg" alt="AI Art 1" class="w-full h-auto object-cover rounded-xl">
       </div>
-      <div class="overflow-hidden rounded-xl card-hover transform hover:scale-105 transition duration-300 shadow-xl">
+      <div class="overflow-hidden rounded-xl card-hover transform hover:scale-105 transition duration-300 shadow-xl" onclick="openModal('pic/art2.jpg')">
         <img src="pic/art2.jpg" alt="AI Art 2" class="w-full h-auto object-cover rounded-xl">
       </div>
-      <div class="overflow-hidden rounded-xl card-hover transform hover:scale-105 transition duration-300 shadow-xl">
+      <div class="overflow-hidden rounded-xl card-hover transform hover:scale-105 transition duration-300 shadow-xl" onclick="openModal('pic/art3.jpg')">
         <img src="pic/art3.jpg" alt="AI Art 3" class="w-full h-auto object-cover rounded-xl">
       </div>
-      <div class="overflow-hidden rounded-xl card-hover transform hover:scale-105 transition duration-300 shadow-xl">
+      <div class="overflow-hidden rounded-xl card-hover transform hover:scale-105 transition duration-300 shadow-xl" onclick="openModal('pic/art4.jpg')">
         <img src="pic/art4.jpg" alt="AI Art 4" class="w-full h-auto object-cover rounded-xl">
       </div>
-      <div class="overflow-hidden rounded-xl card-hover transform hover:scale-105 transition duration-300 shadow-xl">
+      <div class="overflow-hidden rounded-xl card-hover transform hover:scale-105 transition duration-300 shadow-xl" onclick="openModal('pic/art5.jpg')">
         <img src="pic/art5.jpg" alt="AI Art 5" class="w-full h-auto object-cover rounded-xl">
       </div>
-      <div class="overflow-hidden rounded-xl card-hover transform hover:scale-105 transition duration-300 shadow-xl">
+      <div class="overflow-hidden rounded-xl card-hover transform hover:scale-105 transition duration-300 shadow-xl" onclick="openModal('pic/art6.jpg')">
         <img src="pic/art6.jpg" alt="AI Art 6" class="w-full h-auto object-cover rounded-xl">
       </div>
     </div>
   </section>
 
-  <!-- FEATURES SECTION -->
-  <section class="py-20 px-6 bg-black bg-opacity-40 backdrop-blur-lg">
-    <div class="max-w-6xl mx-auto text-center">
-      <h2 class="text-4xl font-bold mb-12 animated-gradient">Why Prompt2Pic?</h2>
-      <div class="grid gap-10 md:grid-cols-3">
-        <div class="glass p-6 rounded-xl" data-aos="fade-up">
-          <div class="icon-text mb-6">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9l5-5m0 0l5 5m-5-5v12" />
-            </svg>
-            <h3 class="text-2xl font-semibold mb-2">🧠 Smart AI Models</h3>
-          </div>
-          <p class="opacity-80">Choose from various models (A, B, C) to generate your preferred style of art in seconds.</p>
-        </div>
-        <div class="glass p-6 rounded-xl" data-aos="fade-up" data-aos-delay="200">
-          <div class="icon-text mb-6">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 0l-2-2m2 2l2-2m4 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <h3 class="text-2xl font-semibold mb-2">🎨 Easy & Free</h3>
-          </div>
-          <p class="opacity-80">No signup needed. Just send your description, and get beautiful images instantly — totally free!</p>
-        </div>
-        <div class="glass p-6 rounded-xl" data-aos="fade-up" data-aos-delay="400">
-          <div class="icon-text mb-6">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.5 4.5L19 19M19 4.5L5.5 19" />
-            </svg>
-            <h3 class="text-2xl font-semibold mb-2">💬 Bonus Jokes & Facts</h3>
-          </div>
-          <p class="opacity-80">Every generation comes with a fun joke or a cool fact to make your day more enjoyable.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- MODAL -->
+  <div id="imageModal" class="modal" onclick="closeModal()">
+    <img id="modalImage" src="" alt="Expanded Image">
+  </div>
 
-  <!-- FOOTER SECTION -->
-  <footer class="footer text-center">
-    <div class="max-w-6xl mx-auto">
-      <p class="text-lg">Prompt2Pic Bot © 2025</p>
-      <p class="text-sm opacity-80">Created with ❤️ for AI enthusiasts</p>
-      <div class="mt-4">
-        <a href="https://t.me/Prompt2PicBot" target="_blank" rel="noopener noreferrer" class="footer-link">Telegram Bot</a>
-        <span class="mx-2">|</span>
-        <a href="mailto:prompt2pic@gmail.com" class="footer-link">Contact</a>
-      </div>
-    </div>
-  </footer>
-
+  <!-- SCRIPT -->
   <script>
     AOS.init();
+
+    function openModal(imageSrc) {
+      const modal = document.getElementById('imageModal');
+      const modalImage = document.getElementById('modalImage');
+      modalImage.src = imageSrc;
+      modal.classList.add('active');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('imageModal');
+      modal.classList.remove('active');
+    }
 
     tsParticles.load("tsparticles", {
       particles: {
@@ -199,21 +135,6 @@
         }
       }
     });
-
-    const messages = [
-      "Generate AI Art by just describing your imagination ✨",
-      "Turn your words into stunning visuals in seconds 🚀",
-      "Powered by multiple smart AI models 🤖",
-      "Bonus: Enjoy a joke or fact with every image! 😄"
-    ];
-
-    let i = 0;
-    const typewriter = document.getElementById("typewriter-text");
-
-    setInterval(() => {
-      i = (i + 1) % messages.length;
-      typewriter.textContent = messages[i];
-    }, 3500);
   </script>
 </body>
 </html>
