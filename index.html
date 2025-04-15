@@ -1232,7 +1232,13 @@
       }
     });
   });
-
+  // Add loading animation for gallery elements
+  const galleryImages = document.querySelectorAll('.gallery-item img');
+  galleryImages.forEach(img => {
+    img.addEventListener('load', () => {
+      img.classList.add('loaded');
+    });
+  });
   // GSAP animations
   document.addEventListener('DOMContentLoaded', () => {
     // Register ScrollTrigger plugin
@@ -1412,14 +1418,6 @@
       });
     });
   }
-
-  // Add loading animation for gallery elements
-  const galleryImages = document.querySelectorAll('.gallery-item img');
-  galleryImages.forEach(img => {
-    img.addEventListener('load', () => {
-      img.classList.add('loaded');
-    });
-  });
 
   // Add smooth scrolling for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
