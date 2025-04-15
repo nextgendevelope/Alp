@@ -1154,7 +1154,8 @@
         const x = (window.innerWidth - e.pageX * speed) / 100;
         const y = (window.innerHeight - e.pageY * speed) / 100;
         const rotation = el.classList.contains('rotate-3') ? '3deg' : '-6deg';
-        el.style.transform = `translateX(${x}px) translateY(${y}px) rotate(${rotation})`;
+        element.style.transform = `translateX(${x}px) translateY(${y}px) rotate(${element.classList.contains('rotate-3') ? '3deg' : '-6deg'})`;
+
       });
     });
 
