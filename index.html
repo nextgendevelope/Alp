@@ -1209,24 +1209,6 @@
     });
   });
 
-  // Reveal gallery items on scroll
-  const galleryItems = document.querySelectorAll('.gallery-item');
-  
-  const observerOptions = {
-    threshold: 0.1
-  };
-  
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('show');
-      }
-    });
-  }, observerOptions);
-  
-  galleryItems.forEach(item => {
-    observer.observe(item);
-  });
 
   // FAQ accordion
   const faqItems = document.querySelectorAll('.faq-item');
@@ -1248,13 +1230,7 @@
       }
     });
   });
-  // Add loading animation for gallery elements
-  const galleryImages = document.querySelectorAll('.gallery-item img');
-  galleryImages.forEach(img => {
-    img.addEventListener('load', () => {
-      img.classList.add('loaded');
-    });
-  });
+
   // GSAP animations
   document.addEventListener('DOMContentLoaded', () => {
     // Register ScrollTrigger plugin
