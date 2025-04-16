@@ -1260,15 +1260,8 @@
     // Add loading animation for gallery elements
     const galleryImages = document.querySelectorAll('.gallery-item img');
     galleryImages.forEach(img => {
-      // For images that are already loaded
-      if (img.complete) {
-        img.classList.add('loaded');
-      } else {
-        // For images that will load
-        img.addEventListener('load', () => {
-          img.classList.add('loaded');
-        });
-      }
+      img.classList.add('loaded');
+      img.style.display = 'block'; // Force display
     });
     // Hero animations
     gsap.from('.hero-content h1', {
