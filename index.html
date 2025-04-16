@@ -1413,7 +1413,6 @@
       const originalForm = formContainer.innerHTML;
       
       // Replace with success message
-      // Replace with success message
       formContainer.innerHTML = `
         <div class="text-center py-12">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-green-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1423,7 +1422,7 @@
           <p class="opacity-80 mb-6">Thank you for contacting us. We'll get back to you soon.</p>
           <button id="send-another" class="glow-btn">Send Another Message</button>
         </div>
-`      ;
+      `;
       // Add event listener to "Send Another" button
       document.getElementById('send-another').addEventListener('click', function() {
         formContainer.innerHTML = originalForm;
