@@ -1127,6 +1127,7 @@
   </div>
   </footer>
 </body>
+
 <!-- JavaScript -->
 <script>
   // Custom cursor
@@ -1231,11 +1232,9 @@
     });
   });
 
-  // GSAP animations
-  document.addEventListener('DOMContentLoaded', () => {
     // Register ScrollTrigger plugin
-    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-      gsap.registerPlugin(ScrollTrigger);
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
     // Add loading animation for gallery elements
 
     const galleryItems = document.querySelectorAll('.gallery-item');
@@ -1367,8 +1366,7 @@
       stagger: 0.1,
       delay: 0.4
     });
-    }
-  });
+  }
   
   // Form validation and submission for Contact section
   const contactForm = document.getElementById('contact-form');
@@ -1431,4 +1429,9 @@
     });
   });
 </script>
+
+
+
+
+
 </html>
