@@ -1286,9 +1286,6 @@
       delay: 0.6
     });
     
-    // Scroll animations
-    gsap.registerPlugin(ScrollTrigger);
-    
     // Features animations
     gsap.from('#features .glass-card', {
       scrollTrigger: {
@@ -1348,44 +1345,40 @@
       duration: 0.8,
       stagger: 0.2
     });
-    // Register ScrollTrigger plugin
-    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-      gsap.registerPlugin(ScrollTrigger);
+    // Features section animations with improved selectors
+    gsap.from('#features .glass-card', {
+      scrollTrigger: {
+        trigger: '#features',
+        start: 'top 80%',
+      },
+      opacity: 0,
+      y: 100,
+      duration: 0.8,
+      stagger: 0.2
+    });
       
-      // Features section animations with improved selectors
-      gsap.from('#features .glass-card', {
-        scrollTrigger: {
-          trigger: '#features',
-          start: 'top 80%',
-        },
-        opacity: 0,
-        y: 100,
-        duration: 0.8,
-        stagger: 0.2
-      });
+    // Contact form animations with improved selectors
+    gsap.from('#contact .glass-card', {
+      scrollTrigger: {
+        trigger: '#contact',
+        start: 'top 80%',
+      },
+      opacity: 0,
+      y: 50,
+      duration: 0.8
+    });
       
-      // Contact form animations with improved selectors
-      gsap.from('#contact .glass-card', {
-        scrollTrigger: {
-          trigger: '#contact',
-          start: 'top 80%',
-        },
-        opacity: 0,
-        y: 50,
-        duration: 0.8
-      });
-      
-      gsap.from('#contact form > div', {
-        scrollTrigger: {
-          trigger: '#contact',
-          start: 'top 80%',
-        },
-        opacity: 0,
-        y: 30,
-        duration: 0.6,
-        stagger: 0.1,
-        delay: 0.4
-      });
+    gsap.from('#contact form > div', {
+      scrollTrigger: {
+        trigger: '#contact',
+        start: 'top 80%',
+      },
+      opacity: 0,
+      y: 30,
+      duration: 0.6,
+      stagger: 0.1,
+      delay: 0.4
+    });
     }
   });
   
