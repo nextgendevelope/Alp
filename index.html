@@ -681,19 +681,7 @@
           duration: 0.8,
           stagger: 0.3
         });
-    
-        // Testimonials animations
-        gsap.from('section:nth-of-type(5) .glass-card', {
-          scrollTrigger: {
-            trigger: 'section:nth-of-type(5)',
-            start: 'top 80%',
-          },
-          opacity: 0,
-          y: 50,
-          duration: 0.8,
-          stagger: 0.2
-        });
-    
+   
         // FAQ animations
         gsap.from('.faq-item', {
           scrollTrigger: {
@@ -718,6 +706,7 @@
           stagger: 0.2
         });
         // Features section animations with improved selectors
+        // Correct animation triggers using IDs or classes
         gsap.from('#features .glass-card', {
           scrollTrigger: {
             trigger: '#features',
@@ -728,8 +717,18 @@
           duration: 0.8,
           stagger: 0.2
         });
-      
-        // Contact form animations with improved selectors
+
+        gsap.from('#testimonials .glass-card', {
+          scrollTrigger: {
+            trigger: '#testimonials',
+            start: 'top 80%',
+          },
+          opacity: 0,
+          y: 50,
+          duration: 0.8,
+          stagger: 0.2
+        });
+
         gsap.from('#contact .glass-card', {
           scrollTrigger: {
             trigger: '#contact',
@@ -739,6 +738,7 @@
           y: 50,
           duration: 0.8
         });
+
       
         gsap.from('#contact form > div', {
           scrollTrigger: {
