@@ -194,12 +194,12 @@
       transform: translateY(0);
       opacity: 1;
     }
-
     .gallery-item img {
       width: 100%;
-      height: 100%;
+      height: 300px; /* Fixed height for uniformity */
       object-fit: cover;
       transition: all 0.5s ease;
+      opacity: 0.8;
     }
 
     .gallery-item::before {
@@ -232,14 +232,6 @@
 
     .gallery-item:hover .gallery-prompt {
       transform: translateY(0);
-    }
-    /* Add these to your existing CSS */
-    .gallery-item img {
-      width: 100%;
-      height: 300px; /* Fixed height for uniformity */
-      object-fit: cover;
-      transition: all 0.5s ease;
-      opacity: 0.8;
     }
 
     .gallery-item img.loaded {
@@ -1182,7 +1174,7 @@
       const speed = element.getAttribute('data-speed');
       const x = (window.innerWidth - e.pageX * speed) / 100;
       const y = (window.innerHeight - e.pageY * speed) / 100;
-      element.style.transform = translateX(${x}px) translateY(${y}px) rotate(${element.classList.contains('rotate-3') ? '3deg' : '-6deg'});
+      element.style.transform = `translateX(${x}px) translateY(${y}px) rotate(${element.classList.contains('rotate-3') ? '3deg' : '-6deg'})`;
     });
   });
 
